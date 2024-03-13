@@ -16,15 +16,19 @@ client.once(Events.ClientReady, readyClient => {
 
 client.on('messageCreate', (message) => {
 	const isBotMessage = message.author.bot && message.author !== client.user;
-    const isNotInAllowedChannel = message.channel.name !== allowedChannel;
+	const isNotInAllowedChannel = message.channel.name !== allowedChannel;
 
-    if (isBotMessage && isNotInAllowedChannel) {
+	if (isBotMessage && isNotInAllowedChannel) {
 		// Reply if it's an interaction or a slash command
-        if (message.type === 19 || message.type === 20) {
-            const channel = client.channels.cache.find(channel => channel.name === allowedChannel);
-            message.reply(`Please use bots in <#${channel.id}>`);
-        }
-    }
+		if (message.type === 19 || message.type === 20) {
+			const channel = client.channels.cache.find(channel => channel.name === allowedChannel);
+			const userId = message.interaction?.user || message.mentions?.repliedUser;
+			message.reply(`Please use bots in <#${channel.id}>`).then(() => {
+				channel.send(`${userId}, please use bots here.`);
+				// message.delete();
+			});
+		}
+	}
 });
 
 // Log in to Discord with your client's token
