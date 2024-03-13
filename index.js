@@ -14,19 +14,18 @@ client.once(Events.ClientReady, readyClient => {
 	console.log(`Ready! Logged in as ${readyClient.user.tag}`);
 });
 
-// TODO: Remove
-// Ping Pong test to check if the bot can reply
 client.on('messageCreate', (message) => {
-    if (message.content === 'Ping'){
-        message.reply('Pong!')
+	const isBotMessage = message.author.bot && message.author !== client.user;
+    const isNotInAllowedChannel = message.channel.name !== allowedChannel;
+
+    if (isBotMessage && isNotInAllowedChannel) {
+		// Reply if it's an interaction or a slash command
+        if (message.type === 19 || message.type === 20) {
+            const channel = client.channels.cache.find(channel => channel.name === allowedChannel);
+            message.reply(`Please use bots in <#${channel.id}>`);
+        }
     }
 });
-
-// TODO: Add condition to check if a bot has been triggered
-
-// Find the channel and send a message
-// const channel = client.channels.cache.find(channel => channel.name === allowedChannel);
-// channel.send('${username}, please use bots here.);
 
 // Log in to Discord with your client's token
 client.login(token);
