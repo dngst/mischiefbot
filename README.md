@@ -4,7 +4,7 @@
 
 Set the required permissions from the bots dashboard.
 
-Add the bot to a server
+Add the bot to a server.
 
 $ touch config.json
 ```
@@ -14,6 +14,6 @@ $ touch config.json
 }
 ```
 
-$ yarn install
+$ yarn
 
 $ node .
