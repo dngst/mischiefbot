@@ -25,7 +25,7 @@ client.on('messageCreate', (message) => {
 			const userId = message.interaction?.user || message.mentions?.repliedUser;
 			message.reply(`Please use bots in <#${channel.id}>`).then(() => {
 				channel.send(`${userId}, please use bots here.`);
-				// message.delete();
+				message.delete();
 			});
 		}
 	}
