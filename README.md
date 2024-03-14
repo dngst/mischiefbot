@@ -17,3 +17,5 @@ $ touch config.json
 $ yarn
 
 $ node .
+
+![screenshot](./mischiefbot.png)
